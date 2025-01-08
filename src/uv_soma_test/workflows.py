@@ -7,9 +7,7 @@ import tiledbsoma.io.spatial
 from scanpy.datasets._datasets import _download_visium_dataset
 
 from uv_soma_test.config import get_data_dir, get_dataset
-
-MEASUREMENT_NAME = "RNA"
-SCENE_NAME = "scene0"
+from uv_soma_test.constants import MEASUREMENT_NAME, SCENE_NAME
 
 
 def download_visium_data(config, dataset_dir=None):
