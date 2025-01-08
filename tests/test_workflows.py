@@ -31,3 +31,16 @@ def test_tiledbsoma_spatialdata():
     images = sdata.images[f"{SCENE_NAME}_tissue"]
     assert isinstance(images, DataTree)
     assert len(images) == 2
+
+
+def test_spatialdata_comparison():
+    """Test spatialdata_direct workflow with pre-existing data."""
+    config = load_config()
+    sdata_direct = spatialdata_direct(config)
+    sdata_soma = tiledbsoma_spatialdata(config)
+
+    table_direct = sdata_direct.table
+    table_soma = sdata_soma.tables[MEASUREMENT_NAME]
+
+    assert set(table_direct.obs.columns) == set(table_soma.obs.columns)
+    assert set(table_direct.uns.keys()) == set(table_soma.uns.keys())
