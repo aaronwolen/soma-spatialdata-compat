@@ -24,3 +24,11 @@ build-backend = "hatchling.build"
 
 [tool.uv.sources]
 tiledbsoma = { git = "https://github.com/single-cell-data/tiledb-soma", subdirectory = "apis/python", rev = "dark/to_spatialdata" }
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.4",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
