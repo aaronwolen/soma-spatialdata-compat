@@ -1,0 +1,26 @@
+[project]
+name = "uv-soma-test"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Aaron Wolen", email = "aaron@wolen.com" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "llvmlite>=0.43.0",
+    "numba>=0.60.0",
+    "spatialdata>=0.2.5.post0",
+    "spatialdata-io>=0.1.5",
+    "tiledbsoma",
+]
+
+[project.scripts]
+uv-soma-test = "uv_soma_test:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+tiledbsoma = { git = "https://github.com/single-cell-data/tiledb-soma", subdirectory = "apis/python", rev = "dark/to_spatialdata" }
