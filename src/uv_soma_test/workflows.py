@@ -39,15 +39,18 @@ def spatialdata_direct(config, dataset_dir=None):
     return sdata
 
 
-def tiledbsoma_spatialdata(config, dataset_dir=None):
+def tiledbsoma_spatialdata(config, dataset_dir=None, experiment_uri=None):
     """Workflow for visium -> tiledbsoma -> spatialdata."""
+    dataset = get_dataset(config)
+
     if dataset_dir is None:
         dataset_dir = download_visium_data(config)
     else:
         dataset_dir = Path(dataset_dir)
 
-    dataset = get_dataset(config)
-    experiment_uri = tempfile.mkdtemp(prefix=f"soma-{dataset['experiment_name']}-")
+    if experiment_uri is None:
+        experiment_uri = tempfile.mkdtemp(prefix=f"soma-{dataset['experiment_name']}-")
+
     tiledbsoma.io.spatial.from_visium(
         experiment_uri=experiment_uri,
         input_path=dataset_dir,
