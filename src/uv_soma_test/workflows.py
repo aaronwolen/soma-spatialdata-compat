@@ -37,7 +37,9 @@ def spatialdata_direct(config, dataset_dir=None):
     return sdata
 
 
-def tiledbsoma_spatialdata(config, dataset_dir=None, experiment_uri=None):
+def tiledbsoma_spatialdata(
+    config, dataset_dir=None, experiment_uri=None, obs_spatial_presence: bool = True
+):
     """Workflow for visium -> tiledbsoma -> spatialdata."""
     dataset = get_dataset(config)
 
@@ -45,9 +47,10 @@ def tiledbsoma_spatialdata(config, dataset_dir=None, experiment_uri=None):
         dataset_dir = download_visium_data(config)
     else:
         dataset_dir = Path(dataset_dir)
-
     if experiment_uri is None:
         experiment_uri = tempfile.mkdtemp(prefix=f"soma-{dataset['experiment_name']}-")
+
+    print(f"\nIngesting into experiment uri: {experiment_uri}\n")
 
     tiledbsoma.io.spatial.from_visium(
         experiment_uri=experiment_uri,
@@ -55,6 +58,7 @@ def tiledbsoma_spatialdata(config, dataset_dir=None, experiment_uri=None):
         measurement_name=MEASUREMENT_NAME,
         scene_name=SCENE_NAME,
         image_channel_first=True,
+        write_obs_spatial_presence=obs_spatial_presence,
     )
     with tiledbsoma.Experiment.open(experiment_uri) as exp:
         with exp.axis_query(
