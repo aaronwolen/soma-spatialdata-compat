@@ -12,7 +12,7 @@ dependencies = [
     "numba>=0.60.0",
     "spatialdata>=0.2.5.post0",
     "spatialdata-io>=0.1.5",
-    "tiledbsoma",
+    "tiledbsoma[spatial-io]",
 ]
 
 [project.scripts]
@@ -22,9 +22,6 @@ uv-soma-test = "uv_soma_test:main"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.uv.sources]
-tiledbsoma = { git = "https://github.com/single-cell-data/tiledb-soma", subdirectory = "apis/python", rev = "dark/to_spatialdata" }
-
 [dependency-groups]
 dev = [
     "pytest>=8.3.4",
@@ -32,3 +29,6 @@ dev = [
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
+
+[tool.uv.sources]
+tiledbsoma = { git = "https://github.com/single-cell-data/tiledb-soma", subdirectory = "apis/python", rev = "dark/to_spatialdata" }
