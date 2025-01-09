@@ -5,19 +5,20 @@ import spatialdata_io as sdio
 import tiledbsoma
 import tiledbsoma.io.spatial
 from scanpy.datasets._datasets import _download_visium_dataset
+from typing_extensions import Optional
 
 from uv_soma_test.config import get_data_dir, get_dataset
 from uv_soma_test.constants import MEASUREMENT_NAME, SCENE_NAME
 
 
-def download_visium_data(config, dataset_dir=None):
+def download_visium_data(config: dict, dataset_dir: Optional[str] = None) -> Path:
     dataset = get_dataset(config)
     if dataset_dir is None:
         data_dir = get_data_dir(config)
     else:
         data_dir = Path(dataset_dir)
 
-    dataset_dir = _download_visium_dataset(
+    dataset_dir: Path = _download_visium_dataset(
         sample_id=dataset["experiment_name"],  # type: ignore
         spaceranger_version=dataset["spaceranger_version"],  # type: ignore
         base_dir=data_dir,
@@ -25,7 +26,7 @@ def download_visium_data(config, dataset_dir=None):
     return Path(dataset_dir)
 
 
-def spatialdata_direct(config, dataset_dir=None):
+def spatialdata_direct(config: dict, dataset_dir: Optional[str] = None):
     """Workflow for converting visium data directly to spatialdata."""
     if dataset_dir is None:
         dataset_dir = download_visium_data(config)
@@ -38,7 +39,10 @@ def spatialdata_direct(config, dataset_dir=None):
 
 
 def tiledbsoma_spatialdata(
-    config, dataset_dir=None, experiment_uri=None, obs_spatial_presence: bool = True
+    config: dict,
+    dataset_dir: Optional[str] = None,
+    experiment_uri: Optional[str] = None,
+    obs_spatial_presence: bool = True,
 ):
     """Workflow for visium -> tiledbsoma -> spatialdata."""
     dataset = get_dataset(config)
