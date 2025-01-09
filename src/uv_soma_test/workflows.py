@@ -57,8 +57,9 @@ def tiledbsoma_spatialdata(config, dataset_dir=None, experiment_uri=None):
         image_channel_first=True,
     )
     with tiledbsoma.Experiment.open(experiment_uri) as exp:
-        sdata = tiledbsoma.io.spatial.to_spatialdata(
-            experiment=exp,
-            measurement_names=[MEASUREMENT_NAME],
-        )
+        with exp.axis_query(
+            measurement_name=MEASUREMENT_NAME,
+        ) as query:
+            print(f"Obs scene IDs: {query.obs_scene_ids()}")
+            sdata = query.to_spatialdata(X_name="data")
     return sdata
