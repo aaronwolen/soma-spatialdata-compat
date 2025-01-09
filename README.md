@@ -15,3 +15,7 @@ source .venv/bin/activate
 uv-soma-test spatialdata-direct
 uv-soma-test tiledbsoma-spatialdata
 ```
+
+## Notebooks
+
+Check the notebooks in the `notebooks` folder for visual comparison of the results.

@@ -26,6 +26,10 @@ build-backend = "hatchling.build"
 dev = [
     "pytest>=8.3.4",
 ]
+notebooks = [
+    "ipykernel>=6.29.5",
+    "spatialdata-plot>=0.2.7",
+]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
