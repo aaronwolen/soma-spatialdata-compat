@@ -5,7 +5,7 @@
 `uv` is required to run the tests. Setup the project with:
 
 ```sh
-uv sync
+uv sync --all-groups
 source .venv/bin/activate
 ```
 
